@@ -53,6 +53,8 @@ ADD ./extra-data/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 #ADD ./extra-data/lets-encrypt.sh /lets-encrypt.sh
 ADD ./extra-data/configuration.js /var/www/aria2-webui/configuration.js
 ADD ./extra-data/start.sh /start.sh
+ADD ./extra-data/add-user.sh /add-user.sh
+ADD ./extra-data/remove-user.sh /remove-user.sh
 
 # Fix rights
 WORKDIR "/var/www"
