@@ -1,0 +1,14 @@
+version: '2'
+services:
+  seedbox:
+    build:
+      context: ./
+    image: quadeare/seedbox
+    volumes:
+      - /var/www
+    ports:
+      - 80:80
+      - 8112:8112
+      - 58846:58846
+      - 58847:58847
+      - 58847/udp:58847/udp
