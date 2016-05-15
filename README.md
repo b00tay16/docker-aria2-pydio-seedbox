@@ -1,7 +1,7 @@
 # Docker Aria2 Pydio Seedbox
 
 ## About
-Docker seedbox, including Aria2, Aria2-webui password protected and Pydio to download with multiple protocols HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.
+Docker seedbox, including [Aria2](https://aria2.github.io/), [Aria2-webui](https://github.com/ziahamza/webui-aria2) password protected and [Pydio](https://github.com/pydio/pydio-core) to download with multiple protocols HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.
 
 ## Usage
 #### Run
