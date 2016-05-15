@@ -17,16 +17,16 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN mkdir -p /tmp/aria2-compilation
 WORKDIR /tmp/aria2-compilation
 RUN wget https://github.com/aria2/aria2/releases/download/release-1.23.0/aria2-1.23.0.tar.xz
-RUN tar xf aria2-1.23.0.tar.xz
+RUN tar xf aria2-1.23.0.tar.xz && rm aria2-1.23.0.tar.xz
 WORKDIR /tmp/aria2-compilation/aria2-1.23.0
 RUN ./configure
 RUN make && make install
 
 # Enable apache2 modules
-RUN a2enmod ssl && a2enmod proxy && a2enmod proxy_http && a2enmod proxy_balancer && a2enmod rewrite
+# RUN a2enmod ssl && a2enmod proxy && a2enmod proxy_http && a2enmod proxy_balancer && a2enmod rewrite
 
 # Clone letsencrypt project
-#RUN git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
+# RUN git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
 
 # Fix php output_buffering
 RUN sed -i 's/output_buffering = 4096/output_buffering = Off/g' /etc/php5/apache2/php.ini
@@ -56,9 +56,17 @@ ADD ./extra-data/start.sh /start.sh
 ADD ./extra-data/add-user.sh /add-user.sh
 ADD ./extra-data/remove-user.sh /remove-user.sh
 
+# Add bash script on bash
+RUN ln -s /remove-user.sh /usr/bin/remove-user
+RUN ln -s /add-user.sh /usr/bin/add-user
+
 # Fix rights
 WORKDIR "/var/www"
 RUN chown -R www-data:www-data /var/www
+
+# Volume
+RUN ln -s /var/www/pydio/data/files /downloads
+VOLUME ["/downloads"]
 
 # Expose ports
 EXPOSE 80

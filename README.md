@@ -1,18 +1,23 @@
 # Docker Aria2 Pydio Seedbox
 
 ## About
-Docker seedbox, including [Aria2](https://aria2.github.io/), [Aria2-webui](https://github.com/ziahamza/webui-aria2) password protected and [Pydio](https://github.com/pydio/pydio-core) to download with multiple protocols HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.
+Docker seedbox, including Aria2, Aria2-webui password protected and Pydio to download with multiple protocols HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.
 
 ## Usage
-#### Run
+#### Run without volume mount
 ```sh
 $ docker run -it --name seedbox -p 8085:80 -p 6800:6800 \
 -e RPC_SECRET=<password> quadeare/docker-aria2-pydio-seedbox
 ```
+### Run with volume mount
+```sh
+$ docker run -it --name seedbox -p 8085:80 -p 6800:6800 -v ./download:\
+-e RPC_SECRET=<password> quadeare/docker-aria2-pydio-seedbox
+```
 #### Add/Remove user to http auth (aria2-webui)
 ```sh
-$ docker exec -it seedbox add-user.sh <user>
-$ docker exec -it seedbox remove-user.sh <user>
+$ docker exec -it seedbox add-user <user>
+$ docker exec -it seedbox remove-user <user>
 ```
 
 #### Pydio setup
