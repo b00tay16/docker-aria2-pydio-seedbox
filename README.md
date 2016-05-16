@@ -5,19 +5,19 @@ Docker seedbox, including Aria2, Aria2-webui password protected and Pydio to dow
 
 ## Services
 ```
-Pydio : http://<your ip>/pydio
+Pydio : http://<your ip>/pydio | All downloads go on "Common Files"
 Aria2 Webui : http://<your ip>/aria2-webui
 ```
 
 ## Usage
 #### Run without volume mount
 ```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 \
+$ docker run --name seedbox -p 8085:80 -p 6800:6800 \
 -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> quadeare/docker-aria2-pydio-seedbox
 ```
 ### Run with volume mount
 ```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 -v ./downloads:/downloads
+$ docker run --name seedbox -p 8085:80 -p 6800:6800 -v ./downloads:/downloads
 -e RPC_SECRET=<password> -e DOMAIN=<domain or ip>quadeare/docker-aria2-pydio-seedbox
 ```
 #### Add/Remove user to http auth (aria2-webui)
@@ -28,8 +28,16 @@ $ docker exec -it seedbox remove-user <user>
 
 #### Pydio setup
 ```
-For a standalone installation, choose sqlite3 database
-If you want to choose another database, you can
+For a standalone installation, choose sqlite3 database.
+If you want to choose another database, you can.
+All downloads go on "Common Files".
+```
+#### Download location
+```
+All downloads go on the "downloads" volume. You can mount this volume with -v argumment.
+Ex : -v ./<you local folder>:/downloads
+
+About Pydio : All downloads go on "Common Files".
 ```
 ## Build
 You can edit and build the project as desired.
