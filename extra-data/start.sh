@@ -24,6 +24,9 @@ cat <<EOF
 RPC_SECRET : $RPC_SECRET
 DOMAIN     : $DOMAIN
 
+#################
+
+
 EOF
 
 # Start supervisord
