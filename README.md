@@ -18,8 +18,9 @@ Aria2 Webui : http://<your ip>/aria2-webui
 ```
 #### Run
 ```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 -v <local folder>:/downloads \
--e RPC_SECRET=<password> -e DOMAIN=<domain or ip> quadeare/docker-aria2-pydio-seedbox
+$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 \
+-v <local folder>:/downloads -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> \
+quadeare/docker-aria2-pydio-seedbox
 ```
 #### Add/Remove user to http auth (aria2-webui)
 ```sh
