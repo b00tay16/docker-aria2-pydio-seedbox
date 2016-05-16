@@ -17,6 +17,8 @@ sed -i "s#DOMAIN#$DOMAIN#" /var/www/aria2-webui/configuration.js
 
 # Echo credentials
 cat <<EOF
+
+
 #################
 # Informations
 #################
