@@ -5,25 +5,21 @@ Docker seedbox, including Aria2, Aria2-webui password protected and Pydio to dow
 
 ## Services
 ```
-Pydio : http://<your ip>/pydio | All downloads go on "Common Files"
+Pydio       : http://<your ip>/pydio | All downloads go on "Common Files"
 Aria2 Webui : http://<your ip>/aria2-webui
 ```
 
 ## Usage
 #### Parameters
 ```
--e RPC_SECRET - Is optional, if empty, a random key is generated.
--e DOMAIN - Is optional, if empty, public IP is selected.
+-e RPC_SECRET                   - Is optional, if empty, a random key is generated.
+-e DOMAIN                       - Is optional, if empty, public IP is selected
+-v <local folder>:/downloads.   - Is optional
 ```
-#### Run without volume mount
+#### Run
 ```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 \
+$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 -v <local folder>:/downloads \
 -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> quadeare/docker-aria2-pydio-seedbox
-```
-### Run with volume mount
-```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 -v ./downloads:/downloads
--e RPC_SECRET=<password> -e DOMAIN=<domain or ip>quadeare/docker-aria2-pydio-seedbox
 ```
 #### Add/Remove user to http auth (aria2-webui)
 ```sh

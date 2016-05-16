@@ -15,5 +15,16 @@ fi
 sed -i "s#RPC_SECRET#$RPC_SECRET#" /var/www/aria2-webui/configuration.js
 sed -i "s#DOMAIN#$DOMAIN#" /var/www/aria2-webui/configuration.js
 
+# Echo credentials
+cat <<EOF
+#################
+# Informations
+#################
+
+RPC_SECRET : $RPC_SECRET
+DOMAIN     : $DOMAIN
+
+EOF
+
 # Start supervisord
 /usr/bin/supervisord
