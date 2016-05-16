@@ -1,4 +1,6 @@
 #!/bin/bash
 
 # Add an htpasswd
-htpasswd -D /etc/apache2/.htpasswd $1
+pure-pw userdel $1
+pure-pw mkdb
+chmod 644 /etc/pure-ftpd/pureftpd.passwd

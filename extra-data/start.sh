@@ -32,7 +32,11 @@ DOMAIN     : $DOMAIN
 EOF
 
 # Fix rights on downloads folder
-chown www-data:www-data /downloads
+chown -R ftpuser:ftpgroup /downloads
+chown -R ftpuser:ftpgroup /var/www
+
+# Transform ftp db into pure-ftpd format
+pure-pw mkdb
 
 # Start supervisord
 /usr/bin/supervisord

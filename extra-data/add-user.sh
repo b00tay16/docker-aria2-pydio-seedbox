@@ -1,4 +1,6 @@
 #!/bin/bash
 
 # Add an htpasswd
-htpasswd -c /etc/apache2/.htpasswd $1
+pure-pw useradd $1 -u ftpuser -g ftpgroup -d /downloads
+pure-pw mkdb
+chmod 644 /etc/pure-ftpd/pureftpd.passwd

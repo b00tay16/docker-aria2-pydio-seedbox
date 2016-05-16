@@ -1,16 +1,41 @@
-FROM phusion/baseimage:0.9.18
+FROM debian:jessie
 MAINTAINER Quadeare <lacrampe.florian@gmail.com>
-
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
 
 # Export TERM
 RUN export TERM=xterm
 
+# Setup dependencies
+RUN echo "deb http://http.debian.net/debian jessie main\n\
+deb-src http://http.debian.net/debian jessie main\n\
+deb http://http.debian.net/debian jessie-updates main\n\
+deb-src http://http.debian.net/debian jessie-updates main\n\
+deb http://security.debian.org jessie/updates main\n\
+deb-src http://security.debian.org jessie/updates main\n\
+" > /etc/apt/sources.list
+
 # Install dependencies
 RUN apt-get update
-RUN apt-get install -y wget apache2 php5 php5-mcrypt php5-gd php5-sqlite php5-mysql php5-pgsql supervisor git unzip zip libav-tools imagemagick apache2-utils
-RUN apt-get build-dep -y aria2
+
+# Get all software
+RUN apt-get install -y wget apache2 php5 php5-mcrypt php5-gd php5-sqlite php5-mysql php5-pgsql supervisor git unzip zip libav-tools imagemagick apache2-utils pure-ftpd
+RUN apt-get build-dep -y aria2 pure-ftpd
+
+# Install pure-ftpd
+RUN mkdir /tmp/pure-ftpd/ && \
+	cd /tmp/pure-ftpd/ && \
+	apt-get source pure-ftpd && \
+	cd pure-ftpd-* && \
+	sed -i '/^optflags=/ s/$/ --without-capabilities/g' ./debian/rules && \
+	dpkg-buildpackage -b -uc
+
+RUN dpkg -i /tmp/pure-ftpd/pure-ftpd-common*.deb
+RUN apt-get -y install openbsd-inetd
+RUN dpkg -i /tmp/pure-ftpd/pure-ftpd_*.deb
+
+# Prevent pure-ftpd upgrading
+RUN apt-mark hold pure-ftpd pure-ftpd-common
+
+# Clean apt-get
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install aria2
@@ -24,9 +49,6 @@ RUN make && make install
 
 # Enable apache2 modules
 RUN a2enmod ssl && a2enmod rewrite
-
-# Clone letsencrypt project
-# RUN git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
 
 # Fix php output_buffering
 RUN sed -i 's/output_buffering = 4096/output_buffering = Off/g' /etc/php5/apache2/php.ini
@@ -50,7 +72,6 @@ ADD ./extra-data/000-default.conf /etc/apache2/sites-available/000-default.conf
 ADD ./extra-data/.htaccess /var/www/pydio/.htaccess
 ADD ./extra-data/envvars /etc/apache2/envvars
 ADD ./extra-data/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-#ADD ./extra-data/lets-encrypt.sh /lets-encrypt.sh
 ADD ./extra-data/configuration.js /var/www/aria2-webui/configuration.js
 ADD ./extra-data/start.sh /start.sh
 ADD ./extra-data/add-user.sh /add-user.sh
@@ -60,17 +81,29 @@ ADD ./extra-data/remove-user.sh /remove-user.sh
 RUN ln -s /remove-user.sh /usr/bin/remove-user
 RUN ln -s /add-user.sh /usr/bin/add-user
 
-# Fix rights
-WORKDIR "/var/www"
-RUN chown -R www-data:www-data /var/www
-
 # Volume
 RUN ln -s /var/www/pydio/data/files /downloads
 VOLUME ["/downloads"]
 
+# Setup FTP
+RUN groupadd ftpgroup
+RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+RUN echo "no" > /etc/pure-ftpd/conf/PAMAuthentication
+RUN echo "yes" > /etc/pure-ftpd/conf/DontResolve
+WORKDIR "/etc/pure-ftpd/auth/"
+RUN ln -s ../conf/PureDB 50puredb
+RUN touch /etc/pure-ftpd/pureftpd.passwd
+
+# Fix rights
+WORKDIR "/var/www"
+RUN chown -R ftpuser:ftpgroup /var/www
+RUN chmod 644 /etc/pure-ftpd/pureftpd.passwd
+
 # Expose ports
 EXPOSE 80
+EXPOSE 21
 EXPOSE 6800
+EXPOSE 30000-30009
 
 
 CMD ["/start.sh"]

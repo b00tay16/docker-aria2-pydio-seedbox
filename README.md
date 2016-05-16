@@ -1,12 +1,13 @@
 # Docker Aria2 Pydio Seedbox
 
 ## About
-Docker seedbox, including [Aria2](https://github.com/aria2/aria2), [Aria2-webui](https://github.com/ziahamza/webui-aria2) password protected and [Pydio](https://github.com/pydio/) to download with multiple protocols HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.
+Docker seedbox, including [Aria2](https://github.com/aria2/aria2), [Aria2-webui](https://github.com/ziahamza/webui-aria2) password protected, [Pure-FTP](https://www.pureftpd.org/project/pure-ftpd) and [Pydio](https://github.com/pydio/) to download with multiple protocols HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.
 
 ## Services
 ```
 Pydio       : http://<your ip>/pydio | All downloads go on "Common Files"
 Aria2 Webui : http://<your ip>/aria2-webui
+FTP         : On your IP on default or custom port
 ```
 
 ## Usage
@@ -19,11 +20,11 @@ Aria2 Webui : http://<your ip>/aria2-webui
 #### Run
 
 ```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 quadeare/aria2-pydio-seedbox
+$ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 quadeare/aria2-pydio-seedbox
 ```
 With options :
 ```sh
-$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 \
+$ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 \
 -v <local folder>:/downloads -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> \
 quadeare/aria2-pydio-seedbox
 ```
@@ -31,7 +32,7 @@ quadeare/aria2-pydio-seedbox
 ```sh
 $ docker logs seedbox
 ```
-#### Add/Remove user to http auth (aria2-webui)
+#### Add/Remove user to http auth (aria2-webui) and FTP
 ```sh
 $ docker exec -it seedbox add-user <user>
 $ docker exec -it seedbox remove-user <user>
