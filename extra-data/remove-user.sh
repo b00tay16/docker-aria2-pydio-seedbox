@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Add an htpasswd
-htpasswd -c /etc/apache2/.htpasswd -D $1
+htpasswd -D /etc/apache2/.htpasswd $1
