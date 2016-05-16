@@ -33,7 +33,7 @@ For a standalone installation, choose sqlite3 database.
 If you want to choose another database, you can.
 All downloads go on "Common Files".
 ```
-#### Download location
+#### Downloads location
 ```
 All downloads go on the "downloads" volume. You can mount this volume with -v argumment.
 Ex : -v ./<you local folder>:/downloads
