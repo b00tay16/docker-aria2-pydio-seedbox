@@ -17,12 +17,12 @@ Aria2 Webui : http://<your ip>/aria2-webui
 ```
 #### Run without volume mount
 ```sh
-$ docker run --name seedbox -p 8085:80 -p 6800:6800 \
+$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 \
 -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> quadeare/docker-aria2-pydio-seedbox
 ```
 ### Run with volume mount
 ```sh
-$ docker run --name seedbox -p 8085:80 -p 6800:6800 -v ./downloads:/downloads
+$ docker run -d --name seedbox -p 8085:80 -p 6800:6800 -v ./downloads:/downloads
 -e RPC_SECRET=<password> -e DOMAIN=<domain or ip>quadeare/docker-aria2-pydio-seedbox
 ```
 #### Add/Remove user to http auth (aria2-webui)
