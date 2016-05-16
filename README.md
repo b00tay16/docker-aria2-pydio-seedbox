@@ -46,7 +46,7 @@ All downloads go on "Common Files".
 #### Downloads location
 ```
 All downloads go on the "downloads" volume. You can mount this volume with -v argumment.
-Ex : -v ./<you local folder>:/downloads
+Ex : -v <you local folder>:/downloads
 
 About Pydio : All downloads go on "Common Files".
 ```
