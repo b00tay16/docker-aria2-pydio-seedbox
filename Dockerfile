@@ -82,7 +82,8 @@ RUN ln -s /remove-user.sh /usr/bin/remove-user
 RUN ln -s /add-user.sh /usr/bin/add-user
 
 # Volume
-RUN ln -s /var/www/pydio/data/files /downloads
+RUN rm -rf /var/www/pydio/data/files
+RUN ln -s /downloads /var/www/pydio/data/files
 VOLUME ["/downloads"]
 
 # Setup FTP

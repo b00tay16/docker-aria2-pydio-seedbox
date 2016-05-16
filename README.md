@@ -7,6 +7,7 @@ Docker seedbox, including [Aria2](https://github.com/aria2/aria2), [Aria2-webui]
 ```
 Pydio       : http://<your ip>/pydio | All downloads go on "Common Files"
 Aria2 Webui : http://<your ip>/aria2-webui
+HTTP        : http://<your ip>/downloads
 FTP         : On your IP on default or custom port
 ```
 
@@ -32,7 +33,7 @@ quadeare/aria2-pydio-seedbox
 ```sh
 $ docker logs seedbox
 ```
-#### Add/Remove user to http auth (aria2-webui) and FTP
+#### Add/Remove user to http auth (aria2-webui/HTTP share) and FTP
 ```sh
 $ docker exec -it seedbox add-user <user>
 $ docker exec -it seedbox remove-user <user>
