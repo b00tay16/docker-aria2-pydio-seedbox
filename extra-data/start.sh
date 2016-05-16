@@ -31,5 +31,8 @@ DOMAIN     : $DOMAIN
 
 EOF
 
+# Fix rights on downloads folder
+chown www-data:www-data /downloads
+
 # Start supervisord
 /usr/bin/supervisord
