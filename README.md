@@ -10,6 +10,11 @@ Aria2 Webui : http://<your ip>/aria2-webui
 ```
 
 ## Usage
+#### Parameters
+```
+-e RPC_SECRET - Is optional, if empty, a random key is generated.
+-e DOMAIN - Is optional, if empty, public IP is selected.
+```
 #### Run without volume mount
 ```sh
 $ docker run --name seedbox -p 8085:80 -p 6800:6800 \
