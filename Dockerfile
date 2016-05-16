@@ -23,7 +23,7 @@ RUN ./configure
 RUN make && make install
 
 # Enable apache2 modules
-# RUN a2enmod ssl && a2enmod proxy && a2enmod proxy_http && a2enmod proxy_balancer && a2enmod rewrite
+RUN a2enmod ssl && a2enmod rewrite
 
 # Clone letsencrypt project
 # RUN git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
