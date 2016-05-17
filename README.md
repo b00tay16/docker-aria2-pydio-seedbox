@@ -16,6 +16,7 @@ FTP         : On your IP on default or custom port
 ```
 -e RPC_SECRET                   - Is optional, if empty, a random key is generated.
 -e DOMAIN                       - Is optional, if empty, public IP is selected
+-e FTP_PASSIVE_RANGE            - Is optional, if empty, 30000:30009 is choosen
 -v <local folder>:/downloads.   - Is optional
 ```
 #### Run
@@ -26,7 +27,8 @@ $ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 quadeare/aria2
 With options :
 ```sh
 $ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 \
--v <local folder>:/downloads -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> \
+-v <local folder>:/downloads \
+e FTP_PASSIVE_RANGE="30000:30009" -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> \
 quadeare/aria2-pydio-seedbox
 ```
 #### Get informations

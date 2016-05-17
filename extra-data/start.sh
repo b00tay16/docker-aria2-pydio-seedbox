@@ -11,6 +11,10 @@ if [ -z $RPC_SECRET ]; then
   export RPC_SECRET=$(date +%s | sha256sum | base64 | head -c 32)
 fi
 
+if [ -z $FTP_PASSIVE_RANGE ]; then
+  export FTP_PASSIVE_RANGE="30000:30009"
+fi
+
 # Change rpc-password on aria2 webui
 sed -i "s#RPC_SECRET#$RPC_SECRET#" /var/www/aria2-webui/configuration.js
 sed -i "s#DOMAIN#$DOMAIN#" /var/www/aria2-webui/configuration.js
