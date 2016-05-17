@@ -22,13 +22,15 @@ FTP         : On your IP on default or custom port
 #### Run
 
 ```sh
-$ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 quadeare/aria2-pydio-seedbox
+$ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 -p 30000-30009:30000-30009 \
+quadeare/aria2-pydio-seedbox
 ```
+
 With options :
 ```sh
-$ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 \
+$ docker run -d --name seedbox -p 9080:80 -p 6800:6800 -p 9021:21 -p 30010-30019:30010-30019 \
 -v <local folder>:/downloads \
-e FTP_PASSIVE_RANGE="30000:30009" -e RPC_SECRET=<password> -e DOMAIN=<domain or ip> \
+e FTP_PASSIVE_RANGE="30010-30019" -e RPC_SECRET="thisismypassword" -e DOMAIN="mydomain.com" \
 quadeare/aria2-pydio-seedbox
 ```
 #### Get informations
