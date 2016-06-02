@@ -22,18 +22,18 @@ if [ -f /firststart ]; then
 	sed -i "s#DOMAIN#$DOMAIN#" /var/www/aria2-webui/configuration.js
 
 	# Echo credentials
-	echo $(cat << EOF
+	cat << EOF
+
 	#################
 	# Informations
 	#################
-
 	RPC_SECRET : $RPC_SECRET
 	DOMAIN     : $DOMAIN
-
 	#################
 
+	
 	EOF
-	)
+	
 
 	touch /firststart
 
@@ -49,4 +49,3 @@ pure-pw mkdb
 
 # Start supervisord
 /usr/bin/supervisord
-
