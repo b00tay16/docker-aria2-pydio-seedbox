@@ -100,6 +100,9 @@ WORKDIR "/var/www"
 RUN chown -R ftpuser:ftpgroup /var/www
 RUN chmod 644 /etc/pure-ftpd/pureftpd.passwd
 
+# Add aria2 session
+RUN touch /etc/aria2/aria2.session
+
 # Expose ports
 EXPOSE 80
 EXPOSE 21
