@@ -22,17 +22,13 @@ if [ -f /firststart ]; then
 	sed -i "s#DOMAIN#$DOMAIN#" /var/www/aria2-webui/configuration.js
 
 	# Echo credentials
-	cat << EOF
 
-	#################
-	# Informations
-	#################
-	RPC_SECRET : $RPC_SECRET
-	DOMAIN     : $DOMAIN
-	#################
-
-	
-	EOF
+	printf "\n#################"
+	printf "# Informations"
+	printf "#################"
+	printf "RPC_SECRET : $RPC_SECRET"
+	printf "DOMAIN     : $DOMAIN"
+	printf "#################\n\n"
 	
 
 	touch /firststart
