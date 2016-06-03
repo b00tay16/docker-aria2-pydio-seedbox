@@ -3,7 +3,7 @@
 # Let's encrypt HTTPS
 # /lets-encrypt.sh
 
-if [ -f /firststart ]; then
+if [ ! -f /firststart ]; then
     
 	if [ -z $DOMAIN ]; then
 	  export DOMAIN=$(wget -qO- ipinfo.io/ip)
