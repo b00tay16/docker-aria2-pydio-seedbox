@@ -4,10 +4,6 @@
 # /lets-encrypt.sh
 
 if [ -f /firststart ]; then
-    
-	if [ -z $DOMAIN ]; then
-	  export DOMAIN=$(wget -qO- ipinfo.io/ip)
-	fi
 
 	if [ -z $RPC_SECRET ]; then
 	  export RPC_SECRET=$(date +%s | sha256sum | base64 | head -c 32)
@@ -17,23 +13,26 @@ if [ -f /firststart ]; then
 	  export FTP_PASSIVE_RANGE="30000:30009"
 	fi
 
-	# Change rpc-password on aria2 webui
+	if [ -z $DOMAIN ]; then
+	  export DOMAIN=$(wget -qO- ipinfo.io/ip)
+	fi
+
+	# Change rpc-password on aria2 webui and supervisor
+	sed -i "s#RPC_SECRET#$RPC_SECRET#" /etc/supervisor/conf.d/supervisord.conf
 	sed -i "s#RPC_SECRET#$RPC_SECRET#" /var/www/aria2-webui/configuration.js
 	sed -i "s#DOMAIN#$DOMAIN#" /var/www/aria2-webui/configuration.js
-
-	# Echo credentials
-
-	printf "\n#################"
-	printf "\n# Informations"
-	printf "\n#################"
-	printf "\nRPC_SECRET : $RPC_SECRET"
-	printf "\nDOMAIN     : $DOMAIN"
-	printf "\n#################\n\n"
 	
-
 	rm /firststart
 
 fi
+
+# Echo credentials
+printf "\n#################"
+printf "\n# Informations"
+printf "\n#################"
+printf "\nRPC_SECRET : $RPC_SECRET"
+printf "\nDOMAIN     : $DOMAIN"
+printf "\n#################\n\n"
 
 
 # Fix rights on downloads folder
