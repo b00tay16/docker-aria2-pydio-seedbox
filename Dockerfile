@@ -101,7 +101,7 @@ RUN chown -R ftpuser:ftpgroup /var/www
 RUN chmod 644 /etc/pure-ftpd/pureftpd.passwd
 
 # Add aria2 session
-RUN touch /downloads/aria2.session
+RUN touch /firststart
 
 # Expose ports
 EXPOSE 80
