@@ -24,11 +24,11 @@ if [ -f /firststart ]; then
 	# Echo credentials
 
 	printf "\n#################"
-	printf "# Informations"
-	printf "#################"
-	printf "RPC_SECRET : $RPC_SECRET"
-	printf "DOMAIN     : $DOMAIN"
-	printf "#################\n\n"
+	printf "\n# Informations"
+	printf "\n#################"
+	printf "\nRPC_SECRET : $RPC_SECRET"
+	printf "\nDOMAIN     : $DOMAIN"
+	printf "\n#################\n\n"
 	
 
 	rm /firststart
@@ -39,6 +39,9 @@ fi
 # Fix rights on downloads folder
 chown -R ftpuser:ftpgroup /downloads
 chown -R ftpuser:ftpgroup /var/www
+
+# Create aria2 session
+touch /downloads/aria2.session
 
 # Transform ftp db into pure-ftpd format
 pure-pw mkdb
