@@ -70,12 +70,13 @@ RUN touch /etc/apache2/.htpasswd
 ADD ./extra-data/mcrypt.ini /etc/php5/apache2/conf.d/mcrypt.ini
 ADD ./extra-data/000-default.conf /etc/apache2/sites-available/000-default.conf
 ADD ./extra-data/.htaccess /var/www/pydio/.htaccess
-ADD ./extra-data/envvars /etc/apache2/envvars
 ADD ./extra-data/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD ./extra-data/configuration.js /var/www/aria2-webui/configuration.js
+ADD ./extra-data/configuration.js /var/www/aria2-webui/configuration.js_bak
 ADD ./extra-data/start.sh /start.sh
 ADD ./extra-data/add-user.sh /add-user.sh
 ADD ./extra-data/remove-user.sh /remove-user.sh
+ADD ./extra-data/aria2.conf /aria2.conf_bak
+ADD ./extra-data/envvars /etc/apache2/envvars
 
 # Add bash script on bash
 RUN ln -s /remove-user.sh /usr/bin/remove-user
@@ -84,7 +85,6 @@ RUN ln -s /add-user.sh /usr/bin/add-user
 # Volume
 RUN rm -rf /var/www/pydio/data/files
 RUN ln -s /downloads /var/www/pydio/data/files
-VOLUME ["/downloads"]
 
 # Setup FTP
 RUN groupadd ftpgroup
@@ -100,8 +100,9 @@ WORKDIR "/var/www"
 RUN chown -R ftpuser:ftpgroup /var/www
 RUN chmod 644 /etc/pure-ftpd/pureftpd.passwd
 
-# Add aria2 session
-RUN touch /firststart
+# Volume
+VOLUME ["/downloads", "/etc/pure-ftpd/"]
+
 
 # Expose ports
 EXPOSE 80
